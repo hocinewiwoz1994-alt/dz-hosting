@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Dz Hosting</title>
+
+  <!-- Main Style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="navbar" id="mainNavbar">
+    <div class="nav-container">
+
+        <!-- LOGO -->
+        <a href="/" class="brand">
+            <div class="brand-logo">
+                <div class="logo-icon">
+                    <span class="dot"></span>
+                    <span class="wave"></span>
+                </div>
+            </div>
+            <span class="brand-name">Dz Hosting</span>
+        </a>
+
+        <!-- NAV LINKS -->
+        <nav class="nav-links">
+            {% if session.get("user_email") or session.get("is_admin") %}
+                <a href="/logout" class="nav-link">Logout</a>
+            {% endif %}
+        </nav>
+
+    </div>
+</header>
+
+<!-- ================= CONTENT ================= -->
+<main class="page-container">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-container">
+    <small>&copy; Dz Hosting 2025</small>
+  </div>
+</footer>
+
+</body>
+</html>

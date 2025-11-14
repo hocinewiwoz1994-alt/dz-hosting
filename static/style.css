@@ -1,0 +1,672 @@
+/* -------------------------------------------------
+   RESET
+---------------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Cairo", sans-serif;
+    background: #0e1117;
+    color: #e3e8f2;
+    direction: ltr;
+    line-height: 1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb {
+    background: #293041;
+    border-radius: 6px;
+}
+
+/* -------------------------------------------------
+   COLORS — ZAP Style
+---------------------------------------------------*/
+:root {
+    --bg: #0e1117;
+    --surface: #141820;
+    --surface-light: #1c212c;
+    --surface-hover: #1f2531;
+
+    --border: #2a3140;
+    --text: #e3e8f2;
+    --text-muted: #9098ac;
+
+    --primary: #4c8dff;
+    --primary-hover: #5b9bff;
+
+    --success: #28c76f;
+    --warning: #ffb547;
+    --danger: #ff4d4d;
+
+    --radius: 10px;
+    --radius-lg: 14px;
+    --shadow: 0 8px 25px rgba(0,0,0,.35);
+}
+
+/* -------------------------------------------------
+   PAGE CONTAINER
+---------------------------------------------------*/
+.page-container {
+    width: 95%;
+    max-width: 1300px;
+    margin: auto;
+    padding-bottom: 40px;
+}
+
+/* -------------------------------------------------
+   NAVBAR — Zap Hosting Inspired
+---------------------------------------------------*/
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: #141820cc;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    transition: .35s;
+    z-index: 999;
+    box-shadow: var(--shadow);
+}
+
+.navbar.shrink {
+    padding: 6px 0;
+    background: #0f131bcc;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.nav-container {
+    width: 95%;
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+.brand-name {
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 700;
+}
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #4c8dff, #00d4ff);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(76,141,255,0.45);
+}
+.logo-icon {
+    width: 60%;
+    height: 60%;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    position: relative;
+}
+.logo-icon .dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+}
+.logo-icon .wave {
+    width: 80%;
+    height: 3px;
+    background: #fff;
+    border-radius: 30px;
+    position: absolute;
+    top: 8px;
+    animation: wave 1.5s infinite ease-in-out;
+    opacity: .7;
+}
+@keyframes wave {
+    0% { transform: scaleX(.5); }
+    50% { transform: scaleX(1); }
+    100% { transform: scaleX(.5); }
+}
+
+/* Navbar Links */
+.nav-links .nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    padding: 8px 18px;
+    border-radius: 8px;
+    transition: .2s;
+}
+.nav-links .nav-link:hover {
+    background: var(--surface-hover);
+    color: var(--primary);
+}
+
+/* -------------------------------------------------
+   PANELS + CARDS
+---------------------------------------------------*/
+.panel, .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 25px;
+    box-shadow: 0 0 25px rgba(0,0,0,.18);
+    transition: .25s;
+}
+.panel:hover, .card:hover {
+    background: var(--surface-hover);
+}
+
+/* Small panel */
+.panel-sm {
+    max-width: 450px;
+    margin: auto;
+}
+
+/* Titles */
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 18px;
+}
+
+/* -------------------------------------------------
+   FORMS
+---------------------------------------------------*/
+.form-group { margin-bottom: 15px; }
+
+input, select {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: var(--radius);
+    background: var(--surface-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: .2s;
+}
+input:focus, select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(76,141,255,.25);
+}
+
+/* -------------------------------------------------
+   BUTTONS
+---------------------------------------------------*/
+.btn {
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn-primary { background: var(--primary); color:white; }
+.btn-primary:hover { background: var(--primary-hover); }
+
+.btn-success { background: var(--success); color:white; }
+.btn-warning { background: var(--warning); color:black; }
+.btn-danger  { background: var(--danger);  color:white; }
+.btn-secondary { background: var(--surface-light); color: var(--text-muted); }
+
+.btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+}
+
+.btn-sm { padding: 7px 12px; font-size: 13px; }
+.btn-block { width: 100%; }
+
+/* -------------------------------------------------
+   GRID SYSTEM
+---------------------------------------------------*/
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 16px;
+}
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+}
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 16px;
+}
+.full { grid-column: 1 / -1; }
+
+@media (max-width:900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* -------------------------------------------------
+   BADGES
+---------------------------------------------------*/
+.badge {
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+}
+.badge-success { background: var(--success); }
+.badge-warning { background: var(--warning); color:black; }
+.badge-danger  { background: var(--danger); }
+
+/* -------------------------------------------------
+   PORT ITEMS
+---------------------------------------------------*/
+.port-item {
+    padding: 6px 12px;
+    background: var(--surface-light);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-family: monospace;
+    cursor: pointer;
+}
+.port-item:hover { background: var(--surface-hover); }
+
+/* -------------------------------------------------
+   MODALS
+---------------------------------------------------*/
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+.modal.show { display: flex; }
+
+.dialog {
+    background: var(--surface-light);
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    min-width: 320px;
+    max-width: 480px;
+    box-shadow: var(--shadow);
+}
+
+.modal-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.modal-content {
+    background: #111;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+/* -------------------------------------------------
+   COPY
+---------------------------------------------------*/
+.copy {
+    cursor: pointer;
+    border-bottom: 1px dashed var(--primary);
+    color: var(--primary);
+}
+.copy:hover { color: var(--primary-hover); }
+
+/* -------------------------------------------------
+   FOOTER
+---------------------------------------------------*/
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+}
+/* Modal Background */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(3px);
+}
+.modal.show { display: flex !important; }
+
+/* Terminal Card */
+.modal-dialog {
+  background: #0a0a0a;
+  border: 2px solid #00ff66;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  width: 90%;
+  max-width: 420px;
+  color: #00ff66;
+  font-family: Consolas, monospace;
+  box-shadow: 0 0 25px #00ff4466;
+}
+
+/* -------------------- VPS LOGO -------------------- */
+
+.vps-logo-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 10px auto 20px;
+}
+
+.vps-logo {
+  width: 150px;
+  height: 150px;
+  filter: drop-shadow(0 0 12px #00ff66);
+  animation: machineBoot 1.8s infinite alternate ease-in-out;
+}
+
+.vps-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  box-shadow: 0 0 25px #00ff66;
+  animation: glowPulse 2s infinite alternate ease-in-out;
+}
+
+@keyframes glowPulse {
+  from { box-shadow: 0 0 10px #00ff66; opacity: .7; }
+  to   { box-shadow: 0 0 30px #00ff88; opacity: 1; }
+}
+
+@keyframes machineBoot {
+  0% { opacity: 0.6; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 0.7; transform: scale(0.98); }
+}
+
+/* -------------------- Loading Text Cursor -------------------- */
+
+.loading-text {
+  font-size: 14px;
+  margin-top: 10px;
+  border-right: 2px solid #00ff66;
+  padding-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  animation: caretBlink 0.8s infinite;
+}
+
+@keyframes caretBlink {
+  50% { border-color: transparent; }
+}
+
+/* -------------------- Progress Bar -------------------- */
+
+.progress-container {
+  margin-top: 20px;
+  width: 100%;
+  height: 12px;
+  background: #00ff6611;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #00ff66;
+  animation: progressAnim 20s linear infinite;
+}
+
+@keyframes progressAnim {
+  0% { width: 0%; }
+  50% { width: 80%; }
+  100% { width: 100%; }
+}
+
+/* Spinner */
+.loading-spinner {
+  margin: 25px auto 0;
+  width: 40px;
+  height: 40px;
+  border: 4px solid #00ff6622;
+  border-top-color: #00ff66;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+/* -------------------------------------------------
+   LOGIN PAGE — Styled to match Zap UI
+---------------------------------------------------*/
+
+.login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 420px;
+    margin: 50px auto;
+    box-shadow: var(--shadow);
+    transition: .25s;
+}
+
+.login-card:hover {
+    background: var(--surface-hover);
+}
+
+.login-card h2 {
+    text-align: center;
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.login-card label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Input fields */
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    background: var(--surface-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    margin-bottom: 15px;
+    transition: .2s;
+}
+.login-card input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(76, 141, 255, .25);
+}
+
+/* Login btn */
+.login-card .btn-login {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 700;
+    transition: .25s;
+}
+.login-card .btn-login:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* Under text */
+.login-card p {
+    text-align: center;
+    margin-top: 12px;
+    color: var(--text-muted);
+}
+
+.login-card a {
+    color: var(--primary);
+}
+.login-card a:hover {
+    color: var(--primary-hover);
+}
+/* LOGIN PAGE STYLE */
+.login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 420px;
+    margin: 50px auto;
+    box-shadow: var(--shadow);
+    transition: .25s;
+}
+
+.login-card:hover {
+    background: var(--surface-hover);
+}
+
+.login-card h2 {
+    text-align: center;
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.login-card label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Input fields */
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    background: var(--surface-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    margin-bottom: 15px;
+    transition: .2s;
+}
+.login-card input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(76, 141, 255, .25);
+}
+
+/* -------------------------------------------------
+   LOGIN PAGE — Styled to match Zap Hosting UI
+---------------------------------------------------*/
+
+.login-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 420px;
+    margin: 70px auto;
+    box-shadow: var(--shadow);
+    transition: .25s;
+}
+
+.login-card:hover {
+    background: var(--surface-hover);
+}
+
+.login-card h2 {
+    text-align: center;
+    color: var(--primary);
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.login-card label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Input fields */
+.login-card input {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    background: var(--surface-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    margin-bottom: 15px;
+    transition: .2s;
+}
+.login-card input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(76, 141, 255, .25);
+}
+
+/* Login button */
+.btn-login {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 700;
+    transition: .25s;
+    border: none;
+    cursor: pointer;
+}
+.btn-login:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.login-card p {
+    text-align: center;
+    margin-top: 12px;
+    color: var(--text-muted);
+}
+
+.login-card a {
+    color: var(--primary);
+    font-weight: 600;
+}
+.login-card a:hover {
+    color: var(--primary-hover);
+}
+

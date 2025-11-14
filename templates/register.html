@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="login-card">
+  <h2>Create a New Account</h2>
+
+  {% if error %}
+    <div class="alert err">{{ error }}</div>
+  {% endif %}
+
+  <form method="post" action="/register">
+
+    <label>Email</label>
+    <input name="email" type="email" required>
+
+    <label>Password</label>
+    <input name="password" type="password" required>
+
+    <label>Confirm Password</label>
+    <input name="confirm" type="password" required>
+
+    <button class="btn-login">Register</button>
+  </form>
+
+  <p>
+    Already have an account?
+    <a href="/login">Login</a>
+  </p>
+</div>
+
+{% endblock %}

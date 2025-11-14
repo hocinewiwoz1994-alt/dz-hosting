@@ -1,0 +1,265 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% if login %}
+
+<!-- ================= LOGIN PANEL ================= -->
+<div class="panel panel-sm" style="max-width:400px;margin:auto;">
+    <h2 class="section-title">Login</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/admin/login" class="form">
+        <div class="form-group">
+            <label>Username</label>
+            <input name="user" placeholder="Username" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input name="pass" type="password" placeholder="Password" required>
+        </div>
+
+        <button class="btn btn-primary btn-block">Login</button>
+    </form>
+</div>
+
+
+{% else %}
+
+<!-- ================= CREATE VPS PANEL ================= -->
+<section class="section">
+    <h2 class="section-title">Create New VPS</h2>
+
+    <form method="post" action="/admin/create" class="panel grid-2">
+
+        <div class="form-group">
+            <label>💽 RAM (GB)</label>
+            <select name="memory_mb" required>
+                <option value="4096">4 GB</option>
+                <option value="8192">8 GB</option>
+                <option value="16384">16 GB</option>
+                <option value="24576">24 GB</option>
+                <option value="32768">32 GB</option>
+                <option value="65536">64 GB</option>
+                <option value="98304">96 GB</option>
+                <option value="131072">128 GB</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>🧠 CPUs</label>
+            <select name="cpus" required>
+                <option value="1">1 Core</option>
+                <option value="2">2 Cores</option>
+                <option value="3">3 Cores</option>
+                <option value="4">4 Cores</option>
+                <option value="6">6 Cores</option>
+                <option value="8">8 Cores</option>
+                <option value="12">12 Cores</option>
+                <option value="16">16 Cores</option>
+            </select>
+        </div>
+
+        <div class="form-group full">
+            <label>🧩 Disk Size</label>
+            <select name="disk_mb" required>
+                <option value="25600">25 GB</option>
+                <option value="51200">50 GB</option>
+                <option value="102400">100 GB</option>
+                <option value="204800">200 GB</option>
+                <option value="409600">400 GB</option>
+                <option value="614400">600 GB</option>
+                <option value="1048576">1 TB</option>
+            </select>
+        </div>
+
+        <button class="btn btn-success full">🚀 Create VPS</button>
+
+    </form>
+</section>
+
+
+<!-- ================= VPS LIST ================= -->
+<section class="section">
+    <h2 class="section-title">Current VPS</h2>
+
+    <div class="grid-2">
+
+    {% for vm in vms %}
+        <div class="panel">
+
+            <h3 class="section-title" style="margin-bottom:10px;">{{ vm.name }}</h3>
+            <p><b>Activation:</b>
+                {% if vm.activated %}
+                    <span class="badge badge-success">Active</span>
+                {% else %}
+                    <form method="post" action="/admin/activate" class="inline">
+                        <input type="hidden" name="serial" value="{{ vm.serial }}">
+                        <button class="btn btn-secondary btn-sm">Activate</button>
+                    </form>
+                {% endif %}
+            </p>
+            <p><b>Status:</b>
+                {% if vm.status == "running" %}
+                    <span class="badge badge-success">🟢 Running</span>
+                {% elif vm.status == "stopped" %}
+                    <span class="badge badge-warning">🟠 Stopped</span>
+                {% elif vm.status == "expired" %}
+                    <span class="badge badge-danger">🔴 Expired</span>
+                {% else %}
+                    <span class="badge">{{ vm.status }}</span>
+                {% endif %}
+            </p>
+			
+            <p><b>Serial:</b> 
+                <span class="copy" data-copy="{{ vm.serial }}">{{ vm.serial }}</span>
+            </p>
+
+            <p><b>Expires At:</b> {{ vm.expires_at or "-" }}</p>
+
+            <div class="divider"></div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="grid-4">
+
+                <form method="post" action="/admin/action">
+                    <input type="hidden" name="name" value="{{ vm.name }}">
+                    <input type="hidden" name="serial" value="{{ vm.serial }}">
+                    <button name="action" value="start" class="btn btn-success btn-sm">▶️ Start</button>
+                </form>
+
+                <form method="post" action="/admin/action">
+                    <input type="hidden" name="name" value="{{ vm.name }}">
+                    <input type="hidden" name="serial" value="{{ vm.serial }}">
+                    <button name="action" value="stop" class="btn btn-warning btn-sm">⏹ Stop</button>
+                </form>
+
+                <form method="post" action="/admin/action">
+                    <input type="hidden" name="name" value="{{ vm.name }}">
+                    <input type="hidden" name="serial" value="{{ vm.serial }}">
+                    <button name="action" value="reset" class="btn btn-secondary btn-sm">🔄 Restart</button>
+                </form>
+
+                <form method="post" action="/admin/action">
+                    <input type="hidden" name="name" value="{{ vm.name }}">
+                    <input type="hidden" name="serial" value="{{ vm.serial }}">
+                    <button name="action" value="delete" class="btn btn-danger btn-sm">🗑 Delete</button>
+                </form>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Update Resources -->
+            <form method="post" action="/admin/update_resources" class="grid-2">
+                <input type="hidden" name="name" value="{{ vm.name }}">
+
+                <div class="form-group">
+                    <label>💽 RAM</label>
+                    <input type="number" name="memory_mb" value="{{ vm.memory }}">
+                </div>
+
+                <div class="form-group">
+                    <label>🧠 CPUs</label>
+                    <input type="number" name="cpus" value="{{ vm.cpus }}">
+                </div>
+
+                <button class="btn btn-primary full">💾 Save</button>
+            </form>
+
+            <div style="margin-top:12px;">
+                <button class="btn btn-secondary btn-sm" onclick="openPasswordModal('{{ vm.serial }}')">🔑 Password</button>
+                <button class="btn btn-secondary btn-sm" onclick="openRenewModal('{{ vm.name }}')">♻ Renew</button>
+                <button class="btn btn-secondary btn-sm"
+                    onclick="showDetails('{{ vm.name }}','{{ vm.ip or '-' }}','{{ vm.user }}','{{ vm.password }}','{{ vm.connect }}','{{ vm.service_ports|join(', ') if vm.service_ports else '-' }}')">
+                    👁 Details
+                </button>
+            </div>
+
+        </div>
+    {% endfor %}
+    </div>
+</section>
+
+
+
+{% endif %}
+
+
+<!-- ===================== DETAILS MODAL ===================== -->
+<div id="vmDetailsModal" class="modal">
+  <div class="modal-dialog">
+    <h3 class="modal-title">VPS Details</h3>
+    <pre id="vmDetailsContent" class="modal-content"></pre>
+    <button class="btn btn-secondary btn-sm modal-close" onclick="closeDetails()">Close</button>
+  </div>
+</div>
+
+
+<!-- ===================== DETAILS MODAL ===================== -->
+<div id="vmDetailsModal" class="modal">
+  <div class="modal-dialog">
+    <h3 class="modal-title">VPS Details</h3>
+    <pre id="vmDetailsContent" class="modal-content"></pre>
+    <button class="btn btn-secondary btn-sm modal-close" onclick="closeModal('vmDetailsModal')">Close</button>
+  </div>
+</div>
+
+<!-- ===================== PASSWORD MODAL ===================== -->
+<div id="passwordModal" class="modal">
+  <div class="modal-dialog">
+    <h3 class="modal-title">🔐 Change Password</h3>
+
+    <form method="post" action="/change_password">
+      <input type="hidden" id="pw_serial_input" name="serial">
+
+      <input type="password" name="new_password" placeholder="New Password" required class="input">
+
+      <button type="submit" class="btn btn-success btn-block">💾 Save</button>
+      <button type="button" class="btn btn-danger btn-block" onclick="closeModal('passwordModal')">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== RENEW MODAL ===================== -->
+<div id="renewModal" class="modal">
+  <div class="modal-dialog">
+    <h3 class="modal-title">♻️ Renew Subscription</h3>
+
+    <form method="post" action="/admin/renew">
+      <input type="hidden" id="renew_name_input" name="name">
+
+      <input type="number" name="days" placeholder="Number of days" value="35" min="1" class="input">
+
+      <button type="submit" class="btn btn-success btn-block">Renew</button>
+      <button type="button" class="btn btn-danger btn-block" onclick="closeModal('renewModal')">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== CREATING VPS OVERLAY ===================== -->
+<div id="creatingMessage" class="modal loading-modal">
+  <div class="modal-dialog">
+
+    <!-- VPS / Hosting Logo -->
+	<div class="vps-logo-container">
+	  <img src="/static/img/vps-machine.svg" class="vps-logo">
+	  <div class="vps-glow"></div>
+	</div>
+
+    <h3>⚙️ Initializing VPS...</h3>
+
+    <div class="loading-text" id="loadingText">Preparing environment...</div>
+
+    <div class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}

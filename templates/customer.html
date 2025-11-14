@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- ================= CUSTOMER PANEL ================= -->
+<div class="panel" style="max-width:700px;margin:auto;">
+
+    <!-- MAIN TITLE -->
+    <h2 class="section-title" style="text-align:center;margin-bottom:20px;">
+        My VPS
+    </h2>
+
+    <!-- ================= SERIAL INPUT FORM ================= -->
+    <form method="get" action="/" class="form" style="display:flex; gap:10px; margin-bottom:20px;">
+        <input name="serial" class="input" placeholder="Enter serial number" required>
+        <button class="btn btn-primary">Enter</button>
+    </form>
+
+    <!-- ================= STATUS ALERTS ================= -->
+    {% if error %}
+        {% if "left" in error or "will end" in error %}
+            <div class="alert alert-warning">{{ error }}</div>
+        {% elif "expired" in error or "stopped" in error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% else %}
+            <div class="alert alert-success">{{ error }}</div>
+        {% endif %}
+    {% endif %}
+
+    <!-- ================= VPS DETAILS ================= -->
+    {% if vm %}
+	<div class="vm-info" 
+		 style="display:grid; grid-template-columns: 1fr 1fr; gap:15px 25px; margin-bottom:20px; line-height:1.7;">
+
+		<p>🧭 <b>IP:</b> <span>{{ vm.ip }}</span></p>
+
+		<p>👤 <b>User:</b> <span>{{ vm.user }}</span></p>
+
+		<p>
+			🔑 <b>Password:</b> 
+			<span class="copy" data-copy="{{ vm.password }}">{{ vm.password }}</span>
+		</p>
+
+		<p>🌐 <b>Connection:</b> <span>{{ vm.connect }}</span></p>
+
+		<p style="grid-column:1 / -1;">
+			⚙️ <b>Status:</b>
+			{% if vm.status == "running" %}
+				<span class="badge badge-success">🟢 Running</span>
+			{% elif vm.status == "stopped" %}
+				<span class="badge badge-warning">🟠 Stopped</span>
+			{% elif vm.status == "expired" %}
+				<span class="badge badge-danger">🔴 Expired</span>
+			{% else %}
+				<span class="badge">⚪ Unknown</span>
+			{% endif %}
+		</p>
+
+	</div>
+
+        <!-- ================= PORTS ================= -->
+        {% if vm.service_ports %}
+        <div class="divider"></div>
+        <h4 class="subtitle" style="margin:10px 0;">🚪 Open Ports</h4>
+
+        <div class="ports-list" style="display:flex; flex-wrap:wrap; gap:8px;">
+            {% for port in vm.service_ports %}
+                <span class="port-item" data-copy="{{ port }}">{{ port }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="divider" style="margin:18px 0;"></div>
+
+        <!-- ================= CONTROL BUTTONS ================= -->
+        <form method="post" action="/customer/action" class="grid-3" style="margin-bottom:15px;">
+            <input type="hidden" name="serial" value="{{ vm.serial }}">
+
+            <button name="action" value="start" class="btn btn-success">▶️ Start</button>
+            <button name="action" value="stop" class="btn btn-warning">⏹ Stop</button>
+            <button name="action" value="reset" class="btn btn-secondary">🔄 Restart</button>
+        </form>
+
+        <div class="divider" style="margin:18px 0;"></div>
+
+        <!-- ================= PASSWORD CHANGE ================= -->
+        <h4 class="subtitle" style="margin-bottom:8px;">🔒 Change Password</h4>
+
+        <form method="post" action="/change_password" class="form" style="display:flex; gap:10px;">
+            <input type="hidden" name="serial" value="{{ vm.serial }}">
+            <input type="password" name="new_password" class="input" placeholder="New password" required>
+            <button type="submit" class="btn btn-primary">💾 Update</button>
+        </form>
+
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
