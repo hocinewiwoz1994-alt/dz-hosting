@@ -37,7 +37,7 @@ class VBoxRemote:
         """هيدر التوكن إذا موجود"""
         h = {}
         if self.token:
-            h["Authorization"] = f"Bearer {self.token}"
+            h["X-API-KEY"] = self.token
         return h
 
     def _post(self, path, payload=None, timeout=30):
