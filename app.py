@@ -9,8 +9,8 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 from db import init_db, list_vms, insert_vm, update_vm_fields, vm_by_serial, vm_by_name, delete_vm, activate_vm_by_serial
 
-import requests
-VBOX_API = "dzhosting.ddns.net:5001"
+import os
+VBOX_API = os.getenv("VBOX_API")
 
 import threading
 from db import list_vms, update_vm_fields
