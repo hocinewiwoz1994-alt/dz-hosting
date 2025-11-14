@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from db import create_user, get_user
 import secrets, time, os
 import config
+import requests
 
 # 🧩 إصلاح مهم جدًا لمسار قاعدة البيانات عند تشغيل SSL
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
