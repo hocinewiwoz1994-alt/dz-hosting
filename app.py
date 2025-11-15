@@ -699,7 +699,7 @@ def favicon():
 def security_txt():
     return "Contact: admin@dzhosing.serveftp.com\nPolicy: none", 200, {"Content-Type": "text/plain"}
 
-if __name__ == "__main__":
+def start():
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
 
