@@ -699,12 +699,12 @@ def favicon():
 def security_txt():
     return "Contact: admin@dzhosing.serveftp.com\nPolicy: none", 200, {"Content-Type": "text/plain"}
 
-def start():
-    import os
+if __name__ == "__main__":
     from waitress import serve
     port = int(os.environ.get("PORT", 5000))
-    print(f"[START] Running on port {port}")
+    print(f"[MAIN] Starting Waitress on port {port}")
     serve(app, host="0.0.0.0", port=port)
+
 
 
 
