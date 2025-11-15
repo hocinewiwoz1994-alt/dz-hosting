@@ -700,10 +700,12 @@ def security_txt():
     return "Contact: admin@dzhosing.serveftp.com\nPolicy: none", 200, {"Content-Type": "text/plain"}
 
 def start():
-    port = int(os.environ.get("PORT", 5000))
-    print(f"🔵 Starting Flask on port {port}")
+    import os
     from waitress import serve
+    port = int(os.environ.get("PORT", 5000))
+    print(f"[START] Running on port {port}")
     serve(app, host="0.0.0.0", port=port)
+
 
 
 
