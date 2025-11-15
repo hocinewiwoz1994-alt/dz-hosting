@@ -1,2 +1,3 @@
-web: python dz-hosting/app.py
+web: python app.py
+
 
