@@ -1,4 +1,5 @@
-web: python -c "from app import start; start()"
+python app.py
+
 
 
 
